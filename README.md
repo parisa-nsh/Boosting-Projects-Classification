@@ -69,4 +69,4 @@ python src/predict.py
 - pandas
 - numpy
 - matplotlib
-- seaborn 
+- seaborn
