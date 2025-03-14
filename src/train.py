@@ -10,7 +10,8 @@ import lightgbm as lgb
 from catboost import CatBoostClassifier
 import matplotlib.pyplot as plt
 import seaborn as sns
-from sklearn.datasets import make_classification
+from sklearn.datasets import (load_breast_cancer, load_iris, 
+                            fetch_california_housing, load_wine)
 
 class BoostingClassifier:
     def __init__(self, model_type='xgboost', params=None):
@@ -83,24 +84,43 @@ class BoostingClassifier:
         plt.savefig('feature_importance.png')
         plt.close()
 
-def load_data():
+def load_data(dataset_name='breast_cancer'):
     """
-    Load and preprocess data
-    For this example, we'll create synthetic data
+    Load and preprocess data from various available datasets
+    Args:
+        dataset_name (str): Name of the dataset to load
+            Options: 'breast_cancer', 'iris', 'wine', 'california'
+    Returns:
+        X (pd.DataFrame): Features
+        y (np.array): Target variable
     """
-    # Create synthetic dataset
-    X, y = make_classification(n_samples=1000, n_features=20, n_informative=15,
-                             n_redundant=5, random_state=42)
+    datasets = {
+        'breast_cancer': load_breast_cancer,
+        'iris': load_iris,
+        'wine': load_wine,
+    }
     
-    # Convert to DataFrame
-    feature_names = [f'feature_{i}' for i in range(X.shape[1])]
-    X = pd.DataFrame(X, columns=feature_names)
+    if dataset_name not in datasets:
+        raise ValueError(f"Dataset {dataset_name} not found. Available datasets: {list(datasets.keys())}")
+    
+    # Load the selected dataset
+    data = datasets[dataset_name]()
+    
+    # Convert to DataFrame with feature names
+    X = pd.DataFrame(data.data, columns=data.feature_names)
+    y = data.target
+    
+    print(f"\nDataset: {data.DESCR.split('Description')[0]}")
+    print(f"Number of samples: {X.shape[0]}")
+    print(f"Number of features: {X.shape[1]}")
+    print(f"Target classes: {np.unique(y)}")
+    print(f"Features: {', '.join(data.feature_names)}\n")
     
     return X, y
 
 def main():
-    # Load data
-    X, y = load_data()
+    # Load data - you can change the dataset here
+    X, y = load_data('breast_cancer')  # or 'iris', 'wine'
     
     # Split the data
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
