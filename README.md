@@ -1,38 +1,43 @@
 # Boosting Projects Classification
 
-This project implements various boosting algorithms for classification tasks using Python. The project includes implementations of:
-- Gradient Boosting
+This project implements and compares various boosting algorithms for classification tasks using popular machine learning libraries.
+
+## Implemented Algorithms
+
 - XGBoost
 - LightGBM
 - CatBoost
+- Gradient Boosting (scikit-learn)
 
 ## Project Structure
+
 ```
-├── src/
-│   ├── train.py
-│   ├── predict.py
-│   └── utils.py
-├── notebooks/
-│   └── exploratory_analysis.ipynb
+.
 ├── data/
-│   ├── raw/
-│   └── processed/
-├── requirements.txt
-└── README.md
+│   ├── raw/          # Raw data files
+│   └── processed/    # Processed data files
+├── src/
+│   └── train.py      # Training script with boosting implementations
+├── results/          # Model outputs and visualizations
+├── logs/            # Training logs
+└── requirements.txt  # Project dependencies
 ```
 
-## Setup Instructions
+## Setup
 
-1. Clone the repository:
-```bash
-git clone https://github.com/parisa-nsh/Boosting-Projects-Classification.git
-cd Boosting-Projects-Classification
-```
-
-2. Create a virtual environment (optional but recommended):
+1. Create a virtual environment:
 ```bash
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
+
+2. Activate the virtual environment:
+- Windows:
+```bash
+venv\Scripts\activate
+```
+- Unix/MacOS:
+```bash
+source venv/bin/activate
 ```
 
 3. Install dependencies:
@@ -42,31 +47,26 @@ pip install -r requirements.txt
 
 ## Usage
 
-1. Place your dataset in the `data/raw` directory
-2. Run the training script:
+Run the training script:
 ```bash
 python src/train.py
 ```
 
-3. Make predictions using the trained model:
-```bash
-python src/predict.py
-```
+The script will:
+1. Load the selected dataset (default: breast cancer)
+2. Train multiple boosting models
+3. Compare their performance
+4. Generate evaluation metrics and visualizations
 
-## Features
-- Implementation of various boosting algorithms
-- Hyperparameter tuning
-- Model evaluation metrics
-- Cross-validation
-- Feature importance analysis
+## Available Datasets
 
-## Requirements
-- Python 3.8+
-- scikit-learn
-- xgboost
-- lightgbm
-- catboost
-- pandas
-- numpy
-- matplotlib
-- seaborn
+- Breast Cancer Wisconsin
+- Iris
+- Wine
+
+## Results
+
+The training script will output:
+- Model accuracy scores
+- Classification reports
+- Feature importance plots (if applicable)
